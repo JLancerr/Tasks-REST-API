@@ -35,4 +35,4 @@ COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
 EXPOSE 3000
 
 # Start the application using the production build
-CMD ["node", "dist/src/main.js"]
+CMD ["node", "dist/main.js"]
