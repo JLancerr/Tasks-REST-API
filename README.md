@@ -1,98 +1,133 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Tasks API
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+A RESTful task management API built with NestJS, Prisma, PostgreSQL, and Docker. It provides authenticated user and task management endpoints, plus Swagger-based API documentation.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Features
 
-## Description
+- User registration and authentication
+- JWT-protected task routes
+- CRUD operations for tasks
+- Task filtering for completed and pending items
+- Swagger documentation at `/api`
+- Database migrations managed with Prisma
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Tech Stack
 
-## Project setup
+- NestJS - backend framework for building the REST API
+- TypeScript - application language
+- Prisma ORM - database access and schema management
+- PostgreSQL - relational database
+- Docker Compose - local database and API container setup
+- Swagger - interactive API documentation
+- JWT - authentication for protected routes
 
-```bash
-$ npm install
-```
+## Project Structure
 
-## Compile and run the project
+- `src/` - application source code
+- `src/users/` - user registration, authentication, and profile management
+- `src/tasks/` - task CRUD and filtering logic
+- `prisma/` - Prisma schema and migrations
+- `docker-compose.yml` - PostgreSQL and API container configuration
 
-```bash
-# development
-$ npm run start
+## Prerequisites
 
-# watch mode
-$ npm run start:dev
+Before running the project, make sure you have:
 
-# production mode
-$ npm run start:prod
-```
+- Node.js 20+ and npm
+- Docker Desktop
 
-## Run tests
+## Setup
+
+1. Install dependencies
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+cd server
+npm install
 ```
 
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+2. Start the database and API with Docker Compose
 
 ```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+docker compose up --build
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+This will start:
 
-## Resources
+- PostgreSQL on port `5432`
+- The NestJS API on port `3000`
 
-Check out a few resources that may come in handy when working with NestJS:
+3. Run Prisma migrations
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+```bash
+npx prisma migrate dev
+```
 
-## Support
+4. Generate the Prisma client
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+```bash
+npx prisma generate
+```
 
-## Stay in touch
+5. Start the development server locally
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+```bash
+npm run start:dev
+```
 
-## License
+## Environment Variables
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+The Docker setup already provides the required values. If you run the app outside Docker, create a `.env` file in the `server` directory with values similar to:
+
+```env
+DATABASE_URL="postgresql://myuser:mypassword@localhost:5432/taskmanager_db?schema=public"
+JWT_SECRET="your_super_secret_jwt_key_here"
+```
+
+## API Documentation
+
+Once the server is running, open:
+
+- Swagger UI: http://localhost:3000/api
+
+## Main API Endpoints
+
+### Users
+
+- `POST /users/create` - register a new user
+- `POST /users/authenticate` - log in and receive a JWT
+- `PATCH /users/profile` - update the authenticated user's profile
+- `DELETE /users/profile` - delete the authenticated user's profile
+
+### Tasks
+
+- `GET /tasks` - get all tasks for the authenticated user
+- `GET /tasks/all-done` - get completed tasks
+- `GET /tasks/all-not-done` - get pending tasks
+- `POST /tasks` - create a task
+- `PATCH /tasks/:id` - update a task
+- `PATCH /tasks/:id/toggle-done` - toggle task completion
+- `DELETE /tasks/:id` - delete a task
+
+## Integration / End-to-End (E2E) Tests
+
+## 🧪 Automated Testing
+
+All tests should be executed through the running Docker containers to ensure clean access to your isolated test database network.
+
+To run the full user registration, login, and task CRUD lifecycle flow tests:
+```bash
+docker compose exec api-server npm run test:e2e
+
+## Useful Prisma Commands
+
+```bash
+npx prisma studio
+npx prisma migrate dev
+npx prisma generate
+```
+
+## Notes
+
+- Protected routes require a valid JWT in the `Authorization` header.
+- The API uses PostgreSQL and Prisma migrations for schema changes.
+- Docker is the easiest way to run the database and API together for local development.
