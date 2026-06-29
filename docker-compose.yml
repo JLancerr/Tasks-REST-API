@@ -19,14 +19,18 @@ services:
   api-server:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.dev
     container_name: nestjs-api-container
     restart: always
     ports:
       - "3000:3000"
+    # Hot reloading for development
+    volumes:
+      - .:/app
+      - /app/node_modules
     environment:
       # Targets the database container using internal Docker networking
-      DATABASE_URL: "postgresql://task_manager_db_b412_user:gt76W3N6ut1zzzY2RITQniby0pHkMEgu@dpg-d90sfauq1p3s738j35c0-a.singapore-postgres.render.com/task_manager_db_b412"
+      DATABASE_URL: "postgresql://myuser:mypassword@postgres-db:5432/taskmanager_db?schema=public"
       JWT_SECRET: "your_super_secret_jwt_key_here"
     depends_on:
       - postgres-db

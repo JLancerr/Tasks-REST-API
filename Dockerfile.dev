@@ -1,0 +1,17 @@
+# Dockerfile for development environment, with hot-reloading
+# server/Dockerfile.dev
+FROM node:20-alpine
+
+WORKDIR /app
+
+COPY package*.json ./
+RUN npm install
+
+# We generate prisma types, but we DO NOT copy the source code or run build yet!
+COPY prisma ./prisma
+RUN npx prisma generate
+
+EXPOSE 3000
+
+# Run NestJS in development watch mode
+CMD ["npm", "run", "start:dev"]
