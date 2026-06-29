@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  # 1. Dedicated PostgreSQL Database Container
+  postgres-db:
+    image: postgres:15-alpine
+    container_name: nestjs-postgres-container
+    restart: always
+    environment:
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
+      POSTGRES_DB: taskmanager_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  # 2. Your NestJS API Container
+  api-server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: nestjs-api-container
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      # Targets the database container using internal Docker networking
+      DATABASE_URL: "postgresql://task_manager_db_b412_user:gt76W3N6ut1zzzY2RITQniby0pHkMEgu@dpg-d90sfauq1p3s738j35c0-a.singapore-postgres.render.com/task_manager_db_b412"
+      JWT_SECRET: "your_super_secret_jwt_key_here"
+    depends_on:
+      - postgres-db
+
+volumes:
+  postgres_data:

@@ -11,12 +11,15 @@ import {
   Req,
 } from '@nestjs/common';
 import { Task } from '@prisma/client';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger'; 
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
 import { TasksService } from './tasks.service';
 import { AuthGuard } from '../auth/auth.guard';
 import * as express from 'express';
 
+@ApiTags('tasks')
+@ApiBearerAuth()
 @UseGuards(AuthGuard) 
 @Controller('tasks')
 export class TasksController {
